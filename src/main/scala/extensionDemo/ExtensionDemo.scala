@@ -6,6 +6,7 @@ import cats.effect.kernel.Sync
 import cats.implicits.catsSyntaxEither
 import cats.syntax.apply.*
 import cats.effect.unsafe.implicits.global
+import cats.implicits.*
 
 object ExtensionDemo:
   case class Person(name: String, age: Int):
@@ -63,4 +64,9 @@ object ExtensionDemo:
         println(e.getMessage)
         IO(ExitCode.Error)
       }).unsafeRunSync()
+
+    List(Person("zeyan$$", 1), Person("zeyan", 1), Person("zeyan", 19)).traverse(p => p.verify[IO]).handleErrorWith(e => {
+      println(e.getMessage)
+      IO(ExitCode.Error)
+    }).unsafeRunSync()
   }
