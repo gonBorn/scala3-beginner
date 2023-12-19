@@ -20,3 +20,5 @@ lazy val root = (project in file("."))
     name := "scala3-beginner",
     libraryDependencies ++= myDependencies
   )
+
+addCommandAlias("checkAndTest", ";clean;scalafmtCheckAll;coverage;test;coverageReport;coverageOff")
