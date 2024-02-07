@@ -3,10 +3,8 @@ package extensionDemo
 import cats.data.{NonEmptyList, Validated, ValidatedNel}
 import cats.effect.kernel.Sync
 import cats.effect.unsafe.implicits.global
-import cats.effect.{ExitCode, IO, IOApp}
+import cats.effect.{ExitCode, IO}
 import cats.implicits.*
-import cats.implicits.catsSyntaxEither
-import cats.syntax.apply.*
 
 object ExtensionDemo:
   case class Person(name: String, age: Int):
@@ -54,30 +52,32 @@ object ExtensionDemo:
 
     Person("zeyan$$", 1)
       .verify[IO]
-      .handleErrorWith(
-      e =>
+      .handleErrorWith(e =>
         println(e.getMessage)
-        IO(ExitCode.Error))
+        IO(ExitCode.Error)
+      )
       .unsafeRunSync()
     Person("zeyan", 1)
       .verify[IO]
-      .handleErrorWith(
-      e =>
+      .handleErrorWith(e =>
         println(e.getMessage)
-        IO(ExitCode.Error))
+        IO(ExitCode.Error)
+      )
       .unsafeRunSync()
     Person("zeyan", 19)
       .verify[IO]
-      .handleErrorWith(
-      e =>
+      .handleErrorWith(e =>
         println(e.getMessage)
-        IO(ExitCode.Error))
+        IO(ExitCode.Error)
+      )
       .unsafeRunSync()
 
     List(Person("zeyan$$", 1), Person("zeyan", 1), Person("zeyan", 19))
       .traverse(p => p.verify[IO])
-      .handleErrorWith(
-      e =>
+      .handleErrorWith(e =>
         println(e.getMessage)
-        IO(ExitCode.Error))
+        IO(ExitCode.Error)
+      )
       .unsafeRunSync()
+
+    println()
